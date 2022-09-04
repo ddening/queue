@@ -20,8 +20,6 @@ typedef enum priority_t {
     PRIORITY_HIGH
 } priority_t;
 
-typedef struct spi_t spi_t;
-
 typedef struct payload_t {
     priority_t priority;
     spi_payload_t* spi;
