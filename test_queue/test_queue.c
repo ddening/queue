@@ -9,6 +9,7 @@
 
 static void test_empty(queue_t* queue);
 static void test_data(queue_t* queue);
+static void test_infinite_loop(queue_t* queue);
 
 void test_queue() {
 
@@ -16,8 +17,11 @@ void test_queue() {
 
     test_empty(queue);
     test_data(queue);
+    test_infinite_loop(queue);
 
     queue_free(queue);
+
+    printf("Test completed!");
 }
 
 static void test_empty(queue_t* queue) {
@@ -89,5 +93,29 @@ static void test_data(queue_t* queue) {
 
     for (int i = 0; i < DATA_ARR_SIZE; i++) {
         free(payload[i]);
+    }
+}
+
+static void test_infinite_loop(queue_t* queue) {
+
+    payload_t* payload1 = (payload_t*)malloc(sizeof(payload_t));
+    payload1->priority = 10;
+
+    payload_t* payload2 = (payload_t*)malloc(sizeof(payload_t));
+    payload2->priority = 5;
+
+    payload_t* payload3 = (payload_t*)malloc(sizeof(payload_t));
+    payload3->priority = 3;
+
+    queue_enqueue(queue, payload1);
+    queue_enqueue(queue, payload2);
+    queue_enqueue(queue, payload3);
+
+    payload_t* _payloud;
+
+    for (int i = 0; i < 3; i++) {
+        _payloud = queue_dequeue(queue);
+        printf("Priority: %i\n", _payloud->priority);
+
     }
 }

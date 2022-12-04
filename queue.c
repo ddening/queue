@@ -36,6 +36,7 @@ int queue_free(queue_t* queue) {
 
         queue->head = queue->head->next_node;
 
+        free(node->payload);
         free(node);
     }
 
